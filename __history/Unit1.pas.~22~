@@ -25,7 +25,7 @@ uses
   cxButtons, cxTextEdit, cxMaskEdit, cxLabel, Math;
 
 type
-  TForm1 = class(TForm)
+  TuSorteador = class(TForm)
     lblNumeroInicial: TcxLabel;
     lblNumeroFinal: TcxLabel;
     edNumeroInicial: TcxMaskEdit;
@@ -34,23 +34,53 @@ type
     lblSorteado: TcxLabel;
     procedure btSortearClick(Sender: TObject);
   private
-    { Private declarations }
+    function temErros(): Boolean;
   public
     { Public declarations }
   end;
 
 var
-  Form1: TForm1;
+  uSorteador: TuSorteador;
 
 implementation
 
 {$R *.dfm}
 
-procedure TForm1.btSortearClick(Sender: TObject);
+procedure TuSorteador.btSortearClick(Sender: TObject);
+var
+  numeroSorteado: Integer;
 begin
-  Randomize;
+  if temErros then
+    Exit;
+
   lblSorteado.Visible := true;
-  lblSorteado.EditValue := IntToStr(RandomRange(1, 2));
+  numeroSorteado := RandomRange(StrToInt(edNumeroInicial.EditValue),
+                                StrToInt(edNumeroFinal.EditValue) + 1);
+  Randomize;
+  lblSorteado.EditValue := 'O número sorteado foi: ' + IntToStr(numeroSorteado);
+end;
+
+function TuSorteador.temErros: Boolean;
+var
+  mensagem : TStringList;
+begin
+  mensagem := TStringList.Create;
+  if edNumeroInicial.EditText = '' then
+     mensagem.Add('Número inicial não informado.');
+
+  if edNumeroFinal.EditText = '' then
+     mensagem.Add('Número Final não informado.');
+
+  if StrToInt(edNumeroFinal.EditValue) >= StrToInt(edNumeroInicial.EditValue) then
+     mensagem.Add('O número inicial deve ser menor que o número final.');
+
+  if mensagem.Count > 0 then
+  begin
+    ShowMessage('Erro: ' + Mensagem.CommaText);
+    result := true;
+  end;
+
+  result := false;
 end;
 
 end.

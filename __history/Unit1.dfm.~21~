@@ -21,13 +21,11 @@ object Form1: TForm1
     Top = 81
     Caption = #218'ltimo n'#250'mero:'
   end
-  object cxMaskEdit1: TcxMaskEdit
+  object edNumeroInicial: TcxMaskEdit
     Left = 152
     Top = 39
     Hint = 'Digite o menor n'#250'mero poss'#237'vel no sorteio'
     ParentShowHint = False
-    Properties.MaskKind = emkRegExpr
-    Properties.EditMask = '[1-9]\d*$'
     ShowHint = True
     TabOrder = 2
     Width = 121
@@ -37,10 +35,22 @@ object Form1: TForm1
     Top = 80
     Hint = 'Digite o maior n'#250'mero poss'#237'vel no sorteio'
     ParentShowHint = False
-    Properties.MaskKind = emkRegExpr
-    Properties.EditMask = '[1-9]\d*$'
     ShowHint = True
     TabOrder = 3
     Width = 121
+  end
+  object btSortear: TcxButton
+    Left = 152
+    Top = 120
+    Width = 75
+    Height = 25
+    Caption = 'Sortear'
+    TabOrder = 4
+    OnClick = btSortearClick
+  end
+  object lblSorteado: TcxLabel
+    Left = 328
+    Top = 84
+    Visible = False
   end
 end

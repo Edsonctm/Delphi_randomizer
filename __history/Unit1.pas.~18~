@@ -47,9 +47,14 @@ implementation
 {$R *.dfm}
 
 procedure TForm1.btSortearClick(Sender: TObject);
+var
+  numeroSorteado: Integer;
 begin
+  lblSorteado.Visible := true;
+  numeroSorteado := RandomRange(StrToInt(edNumeroInicial.EditValue),
+                                StrToInt(edNumeroFinal.EditValue) + 1);
   Randomize;
-//  lblSorteado := IntToStr(RandomRange(1, 2));
+  lblSorteado.EditValue := 'O número sorteado foi: ' + IntToStr(numeroSorteado);
 end;
 
 end.

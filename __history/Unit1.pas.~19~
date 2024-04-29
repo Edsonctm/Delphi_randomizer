@@ -22,17 +22,18 @@ uses
   dxSkinTheBezier, dxSkinValentine, dxSkinVisualStudio2013Blue,
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinWXI, dxSkinXmas2008Blue, Vcl.Menus, Vcl.StdCtrls,
-  cxButtons, cxTextEdit, cxMaskEdit, cxLabel;
+  cxButtons, cxTextEdit, cxMaskEdit, cxLabel, Math;
 
 type
   TForm1 = class(TForm)
     lblNumeroInicial: TcxLabel;
     lblNumeroFinal: TcxLabel;
-    cxMaskEdit1: TcxMaskEdit;
+    edNumeroInicial: TcxMaskEdit;
     edNumeroFinal: TcxMaskEdit;
     btSortear: TcxButton;
     lblSorteado: TcxLabel;
     procedure btSortearClick(Sender: TObject);
+    function temErros: Boolean;
   private
     { Private declarations }
   public
@@ -47,9 +48,14 @@ implementation
 {$R *.dfm}
 
 procedure TForm1.btSortearClick(Sender: TObject);
+var
+  numeroSorteado: Integer;
 begin
+  lblSorteado.Visible := true;
+  numeroSorteado := RandomRange(StrToInt(edNumeroInicial.EditValue),
+                                StrToInt(edNumeroFinal.EditValue) + 1);
   Randomize;
-  RandomRange(edNumweo, NumeroMaximo + 1);
+  lblSorteado.EditValue := 'O número sorteado foi: ' + IntToStr(numeroSorteado);
 end;
 
 end.

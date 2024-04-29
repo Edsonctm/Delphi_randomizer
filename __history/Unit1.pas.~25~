@@ -22,27 +22,61 @@ uses
   dxSkinTheBezier, dxSkinValentine, dxSkinVisualStudio2013Blue,
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinWXI, dxSkinXmas2008Blue, Vcl.Menus, Vcl.StdCtrls,
-  cxButtons, cxTextEdit, cxMaskEdit, cxLabel;
+  cxButtons, cxTextEdit, cxMaskEdit, cxLabel, Math;
 
 type
-  TForm1 = class(TForm)
+  TuSorteador = class(TForm)
     lblNumeroInicial: TcxLabel;
     lblNumeroFinal: TcxLabel;
-    cxMaskEdit1: TcxMaskEdit;
+    edNumeroInicial: TcxMaskEdit;
     edNumeroFinal: TcxMaskEdit;
     btSortear: TcxButton;
     lblSorteado: TcxLabel;
+    procedure btSortearClick(Sender: TObject);
   private
-    { Private declarations }
+    function temErros(): Boolean;
   public
     { Public declarations }
   end;
 
 var
-  Form1: TForm1;
+  uSorteador: TuSorteador;
 
 implementation
 
 {$R *.dfm}
+
+procedure TuSorteador.btSortearClick(Sender: TObject);
+var
+  numeroSorteado: Integer;
+begin
+  if temErros then
+    Exit;
+
+  lblSorteado.Visible := true;
+  numeroSorteado := RandomRange(StrToInt(edNumeroInicial.EditValue),
+                                StrToInt(edNumeroFinal.EditValue) + 1);
+  Randomize;
+  lblSorteado.EditValue := 'O número sorteado foi: ' + IntToStr(numeroSorteado);
+end;
+
+function TuSorteador.temErros: Boolean;
+var
+  mensagem : TStringList;
+begin
+  mensagem := TStringList.Create;
+  if (edNumeroInicial.EditText = '') OR (edNumeroFinal.EditText = '') then
+     mensagem.Add('Número inicial ou final não informado.')
+  else if StrToInt(edNumeroFinal.EditValue) <= StrToInt(edNumeroInicial.EditValue) then
+    mensagem.Add('O número inicial deve ser menor que o número final.');
+
+  if mensagem.Count > 0 then
+  begin
+    ShowMessage('Erro: ' + Mensagem.CommaText);
+    result := true;
+  end
+  else
+    result := false;
+end;
 
 end.
